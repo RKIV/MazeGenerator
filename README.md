@@ -1,2 +1,2 @@
 # MazeGenerator
-Compile gnerator.cpp and cell.cpp.
+Compile generator.cpp and cell.cpp.
