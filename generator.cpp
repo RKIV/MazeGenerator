@@ -4,9 +4,9 @@
 
 int main(int argc, char *argv[]){
 
-    Maze maze(40, false);
+    Maze maze(40);
 
-    maze.DFGeneration();
+    maze.DFGeneration(false);
 
     maze.displayMaze();
 

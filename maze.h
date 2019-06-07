@@ -2,10 +2,14 @@
 #include "cell.h"
 #include <stack>
 
+/**
+ * Create a maze with given number of cells
+ * 
+ * @param size Dimensions of the maze in cells
+ */
 class Maze{
     private:
         int size;
-        bool printIter;
         int cellsVisited;
         int currentCellsIndex[2];
         // Array of cells
@@ -17,7 +21,7 @@ class Maze{
         std::stack <int> solutionCellStack1;
         std::stack <int> solutionCellStack2;
     public:
-        Maze(int size, bool printIter);
-        void DFGeneration();
+        Maze(int size);
+        void DFGeneration(bool printIter);
         void displayMaze();
 };

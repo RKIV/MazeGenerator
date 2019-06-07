@@ -4,16 +4,20 @@
 #include <time.h>
 #include <iostream>
 
-Maze::Maze(int size, bool printIter){
+
+Maze::Maze(int size){
         Maze::size = size;
-        Maze::printIter = printIter;
         Maze::cells = new Cell*[Maze::size];
         for(int i = 0; i < Maze::size; i++)
             Maze::cells[i] = new Cell[Maze::size];
     }
 
-// Depth First Maze Generation
-void Maze::DFGeneration(){
+/**
+ * Generates mazed based on Depth First Search algorithm
+ * 
+ * @param printIter Whether or not to print the maze every iteration of generation
+ */
+void Maze::DFGeneration(bool printIter){
     
     // Seeding random directon
     srand(time(NULL));
@@ -27,7 +31,7 @@ void Maze::DFGeneration(){
     cells[Maze::size-1][Maze::size-1].removeWall(0);
 
     while(cellsVisited < Maze::size * Maze::size){
-        if(Maze::printIter){
+        if(printIter){
             Maze::displayMaze();
         }
 
@@ -178,7 +182,9 @@ void Maze::DFGeneration(){
 
     }
 }
-
+/**
+ * Displays maze in terminal with ASCII
+ */
 void Maze::displayMaze(){
     std::cout << "  ";
     for(int i = 0; i < Maze::size - 1; i++){
