@@ -3,10 +3,28 @@
 #include <stack>
 #include <stdlib.h>
 #include <time.h>
+#include <limits>
 
 
-int main(){
-    const int SIZE = 30;
+int main(int argc, char *argv[]){
+
+    int SIZE;
+    char printIter;
+
+    std::cout << "Size of maze(single integer): ";
+    while(!(std::cin >> SIZE)){
+        std::cout << "Bad value!\nSize of maze(single integer): ";
+        std::cin.clear();
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    }
+    std::cout << "Print every iteration of maze generation('y' for prints)(Not recommended for sizes larger than 10): ";
+    while(!(std::cin >> printIter)){
+        std::cout << "Bad value!\nPrint every iteration of maze generation('y' for prints)(Not recommended for sizes larger than 10): ";
+        std::cin.clear();
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    }
+
+    
     const int START_CELL_INDEX[2] = {1, 0};
     const int END_CELL_INDEX[2] = {SIZE-1, SIZE-1};
 
@@ -27,29 +45,31 @@ int main(){
 
     while(cellsVisited < SIZE * SIZE){
         //Outputing the Maze every iteration
-        /* 
-        std::cout << "  ";
-        for(int i = 0; i < SIZE - 1; i++){
-            std::cout << "__";
-        }
-        std::cout << std::endl;
-        for(int j = 0; j < SIZE; j++){
-            std::cout << "|";
-            for(int i = 0; i < SIZE; i++){
-                if(cells[j][i].getWall(0)){
-                    std::cout << "_";
-                } else {
-                    std::cout << " ";
-                }
-                if(cells[j][i].getWall(1)){
-                    std::cout << "|";
-                } else {
-                    std::cout << " ";
-                }
+        if(&printIter == "y"){
+            std::cout << "  ";
+            for(int i = 0; i < SIZE - 1; i++){
+                std::cout << "__";
             }
             std::cout << std::endl;
+            for(int j = 0; j < SIZE; j++){
+                std::cout << "|";
+                for(int i = 0; i < SIZE; i++){
+                    if(cells[j][i].getWall(0)){
+                        std::cout << "_";
+                    } else {
+                        std::cout << " ";
+                    }
+                    if(cells[j][i].getWall(1)){
+                        std::cout << "|";
+                    } else {
+                        std::cout << " ";
+                    }
+                }
+                std::cout << std::endl;
+            }
         }
-        */
+
+
 
         //Set current cell to be visited
         cells[currentCellIndex[0]][currentCellIndex[1]].setVisited();
@@ -60,17 +80,19 @@ int main(){
             solutionCellStack2 = cellStack2;
         }
 
-        // Generating Direction to move
+        // Generating a random Direction to move
         // 0 = vertical, 1 = horizontal
         bool direction = rand() % 2;
         bool perpDirection = direction == 0;
-        //Choosing positive or negative movement
+
+        //Choosing a random positive or negative movement
         // Negative Sign = up or left | Positive Sign = down or right
         int x = rand() - 16383;
         int sign;
         if(x > 0) sign = 1;
         else sign = -1;
 
+        // Finding the first possible neighbor
         if(currentCellIndex[direction] + sign >= 0 && currentCellIndex[direction] + sign < SIZE){
             int newIndex[2];
             if(direction == 0){
@@ -183,6 +205,7 @@ int main(){
                 continue;
             }
         }
+        // If no available neighbors, pop back on the stack until available neighbors are found.
         currentCellIndex[0] = cellStack1.top();
         currentCellIndex[1] = cellStack2.top();
         cellStack1.pop();
@@ -190,11 +213,8 @@ int main(){
 
     }
 
-
-    
-
     // Outputting Final Maze
-    std::cout << "  ";
+    std::cout << " S";
     for(int i = 0; i < SIZE - 1; i++){
         std::cout << "__";
     }
@@ -215,4 +235,6 @@ int main(){
         }
         std::cout << std::endl;
     }
+    for(int i = 0; i < SIZE-1; i++) std::cout << "  ";
+    std::cout << " E";
 };
