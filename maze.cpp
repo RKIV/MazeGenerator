@@ -12,6 +12,7 @@ Maze::Maze(int size, bool printIter){
             Maze::cells[i] = new Cell[Maze::size];
     }
 
+// Depth First Maze Generation
 void Maze::DFGeneration(){
     
     // Seeding random directon
