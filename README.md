@@ -1,5 +1,6 @@
 # MazeGenerator
 A Depth First Search Running Stack Maze Generation Program
+
 Compile everything in folder and run.
 
 ```g++ main.cpp maze.cpp cell.cpp -o main.exe```
